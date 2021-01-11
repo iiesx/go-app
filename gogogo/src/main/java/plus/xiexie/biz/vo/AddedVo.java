@@ -4,6 +4,14 @@ public class AddedVo {
 
     private String id;
 
+    public AddedVo() {
+
+    }
+
+    public AddedVo(String id){
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

@@ -3,11 +3,196 @@
 <mapper namespace="plus.xiexie.biz.mapper.UserMapper">
 
     <select id="getUsers" resultType="User">
-        select * from user
+        select * from user where 1=1
+        <choose>
+            <when test="querier.filter.id != null and querier.operator == 'eq'">
+                and id = #{querier.filter.id}
+            </when>
+            <when test="querier.filter.id != null and querier.operator == 'like'">
+                and id like "%"#{querier.filter.id}"%"
+            </when>
+            <when test="querier.filter.name != null and querier.operator == 'eq'">
+                and nick_name = #{querier.filter.name}
+            </when>
+            <when test="querier.filter.name != null and querier.operator == 'like'">
+                and nick_name like "%"#{querier.filter.name}"%"
+            </when>
+            <when test="querier.filter.phone != null and querier.operator == 'eq'">
+                and phone = #{querier.filter.phone}
+            </when>
+            <when test="querier.filter.phone != null and querier.operator == 'like'">
+                and phone like "%"#{querier.filter.phone}"%"
+            </when>
+            <when test="querier.filter.email != null and querier.operator == 'eq'">
+                and email = #{querier.filter.email}
+            </when>
+            <when test="querier.filter.email != null and querier.operator == 'like'">
+                and email like "%"#{querier.filter.email}"%"
+            </when>
+            <when test="querier.filter.sex != null">
+                and sex = #{querier.filter.sex}
+            </when>
+            <when test="querier.sort != null and querier.order != null and querier.sort == 'updateTime'">
+                order by last_update_date ${querier.order}
+            </when>
+            <when test="querier.sort != null and querier.order != null and querier.sort == 'createTime'">
+                order by create_date ${querier.order}
+            </when>
+        </choose>
+        <if test="querier.pagination != null">
+            limit #{querier.pagination.limit} offset #{querier.pagination.offset}
+        </if>
+    </select>
+
+    <select id="getUsersCount" resultType="Integer">
+        select count(*) as total from user where 1=1
+        <choose>
+            <when test="querier.filter.id != null and querier.operator == 'eq'">
+                and id = #{querier.filter.id}
+            </when>
+            <when test="querier.filter.id != null and querier.operator == 'like'">
+                and id like "%"#{querier.filter.id}"%"
+            </when>
+            <when test="querier.filter.name != null and querier.operator == 'eq'">
+                and nick_name = #{querier.filter.}
+            </when>
+            <when test="querier.filter.name != null and querier.operator == 'like'">
+                and nick_name like "%"#{querier.filter.name}"%"
+            </when>
+            <when test="querier.filter.phone != null and querier.operator == 'eq'">
+                and phone = #{querier.filter.phone}
+            </when>
+            <when test="querier.filter.phone != null and querier.operator == 'like'">
+                and phone like "%"#{querier.filter.phone}"%"
+            </when>
+            <when test="querier.filter.email != null and querier.operator == 'eq'">
+                and email = #{querier.filter.email}
+            </when>
+            <when test="querier.filter.email != null and querier.operator == 'like'">
+                and email like "%"#{querier.filter.email}"%"
+            </when>
+            <when test="querier.filter.sex != null">
+                and sex = #{querier.filter.sex}
+            </when>
+        </choose>
     </select>
 
     <select id="getUserById" resultType="User">
         select * from user where id = #{id}
     </select>
+
+    <insert id="addUser" parameterType="User">
+        insert into user
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            #{user.id},
+            #{user.nickName},
+            #{user.cnName},
+            #{user.enName},
+            #{user.phone},
+            #{user.email},
+            #{user.password},
+            #{user.sex},
+            #{user.age},
+            #{user.birthday},
+            #{user.photo},
+            #{user.primaryStage},
+            #{user.juniorStage},
+            #{user.seniorStage},
+            #{user.collegeStage},
+            #{user.qualification},
+            #{user.wechat},
+            #{user.qq},
+            #{user.weibo},
+            #{user.address},
+            #{user.signature},
+            #{user.salt},
+            <choose>
+                <when test="user.createDate != null">
+                    #{user.createDate},
+                </when>
+                <otherwise>
+                    current_timestamp,
+                </otherwise>
+            </choose>
+            current_timestamp,
+        </trim>
+    </insert>
+
+    <delete id="deleteUser">
+        delete from user where id = #{id}
+    </delete>
+
+    <update id="updateUserInfo" parameterType="User">
+        update user
+        <set>
+            <if test="user.nickName != null">
+                nick_name = #{user.nickName},
+            </if>
+            <if test="user.cnName != null">
+                cn_name = #{user.cnName},
+            </if>
+            <if test="user.enName != null">
+                en_name = #{user.enName},
+            </if>
+            <if test="user.phone != null">
+                phone = #{user.phone},
+            </if>
+            <if test="user.email != null">
+                email = #{user.email},
+            </if>
+            <if test="user.password != null">
+                password = #{user.password},
+            </if>
+            <if test="user.sex != null">
+                sex = #{user.sex},
+            </if>
+            <if test="user.age != null">
+                age = #{user.age},
+            </if>
+            <if test="user.birthday != null">
+                birthday = #{user.birthday},
+            </if>
+            <if test="user.photo != null">
+                photo = #{user.photo},
+            </if>
+            <if test="user.primaryStage != null">
+                primary_stage = #{user.primaryStage},
+            </if>
+            <if test="user.juniorStage != null">
+                junior_stage = #{user.juniorStage},
+            </if>
+            <if test="user.seniorStage != null">
+                senior_stage = #{user.seniorStage},
+            </if>
+            <if test="user.collegeStage != null">
+                college_stage = #{user.collegeStage},
+            </if>
+            <if test="user.qualification != null">
+                qualification = #{user.qualification},
+            </if>
+            <if test="user.wechat != null">
+                wechat = #{user.wechat},
+            </if>
+            <if test="user.qq != null">
+                qq = #{user.qq},
+            </if>
+            <if test="user.weibo != null">
+                weibo = #{user.weibo},
+            </if>
+            <if test="user.address != null">
+                address = #{user.address},
+            </if>
+            <if test="user.signature != null">
+                signature = #{user.signature},
+            </if>
+            <if test="user.salt != null">
+                salt = #{user.salt},
+            </if>
+            last_update_date = current_timestamp
+        </set>
+        where id = #{user.id}
+    </update>
+
+
 
 </mapper>

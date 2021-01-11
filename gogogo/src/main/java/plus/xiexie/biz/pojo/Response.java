@@ -67,7 +67,4 @@ public class Response<T> {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(Response.error());
-    }
 }

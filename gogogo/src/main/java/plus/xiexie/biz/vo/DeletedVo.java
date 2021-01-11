@@ -2,13 +2,21 @@ package plus.xiexie.biz.vo;
 
 public class DeletedVo {
 
-    private int delRows;
+    private Integer delRows;
+
+    public DeletedVo() {
+
+    }
+
+    public DeletedVo(Integer delRows) {
+        this.delRows = delRows;
+    }
 
     public int getDelRows() {
         return delRows;
     }
 
-    public void setDelRows(int delRows) {
+    public void setDelRows(Integer delRows) {
         this.delRows = delRows;
     }
 }

@@ -4,7 +4,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"plus.xiexie.biz.controller","plus.xiexie.biz.service","plus.xiexie.config"})
+@ComponentScan({
+        "plus.xiexie.biz.controller",
+        "plus.xiexie.biz.service",
+        "plus.xiexie.config",
+        "plus.xiexie.handler"
+})
 @MapperScan("plus.xiexie.biz.mapper")
 public class App {
 
